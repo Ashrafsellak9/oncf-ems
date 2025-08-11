@@ -1,0 +1,585 @@
+{% extends "base.html" %}
+
+{% block title %}Paramètres - ONCF GIS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0">
+                    <i class="fas fa-cog me-2 text-primary"></i>
+                    Paramètres
+                </h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Accueil</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Paramètres</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Paramètres de notification -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-bell me-2"></i>
+                        Notifications
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="notificationForm">
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="emailNotifications" name="notifications_email">
+                                <label class="form-check-label" for="emailNotifications">
+                                    Notifications par email
+                                </label>
+                                <div class="form-text">Recevoir des notifications par email pour les incidents importants</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="browserNotifications" name="notifications_browser">
+                                <label class="form-check-label" for="browserNotifications">
+                                    Notifications navigateur
+                                </label>
+                                <div class="form-text">Afficher des notifications dans le navigateur</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="notificationFrequency" class="form-label">Fréquence des notifications</label>
+                            <select class="form-select" id="notificationFrequency" name="notification_frequency">
+                                <option value="immediate">Immédiate</option>
+                                <option value="hourly">Toutes les heures</option>
+                                <option value="daily">Quotidienne</option>
+                                <option value="weekly">Hebdomadaire</option>
+                            </select>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>
+                                Sauvegarder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paramètres d'affichage -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-palette me-2"></i>
+                        Apparence
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="appearanceForm">
+                        <div class="mb-3">
+                            <label for="theme" class="form-label">Thème</label>
+                            <select class="form-select" id="theme" name="theme">
+                                <option value="light">Clair</option>
+                                <option value="dark">Sombre</option>
+                                <option value="auto">Automatique</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="language" class="form-label">Langue</label>
+                            <select class="form-select" id="language" name="language">
+                                <option value="fr">Français</option>
+                                <option value="ar">العربية</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="timezone" class="form-label">Fuseau horaire</label>
+                            <select class="form-select" id="timezone" name="timezone">
+                                <option value="Africa/Casablanca">Casablanca (UTC+0/+1)</option>
+                                <option value="UTC">UTC</option>
+                                <option value="Europe/Paris">Paris (UTC+1/+2)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save me-2"></i>
+                                Sauvegarder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paramètres de la carte -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-map me-2"></i>
+                        Carte Interactive
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="mapForm">
+                        <div class="mb-3">
+                            <label for="defaultZoom" class="form-label">Zoom par défaut</label>
+                            <input type="range" class="form-range" id="defaultZoom" name="default_zoom" min="5" max="18" value="6">
+                            <div class="d-flex justify-content-between">
+                                <small>Zoomé</small>
+                                <small id="zoomValue">6</small>
+                                <small>Dézoomé</small>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="autoRefresh" name="auto_refresh">
+                                <label class="form-check-label" for="autoRefresh">
+                                    Actualisation automatique
+                                </label>
+                                <div class="form-text">Actualiser automatiquement les données de la carte</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="refreshInterval" class="form-label">Intervalle d'actualisation (secondes)</label>
+                            <select class="form-select" id="refreshInterval" name="refresh_interval">
+                                <option value="30">30 secondes</option>
+                                <option value="60">1 minute</option>
+                                <option value="300">5 minutes</option>
+                                <option value="600">10 minutes</option>
+                            </select>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-info">
+                                <i class="fas fa-save me-2"></i>
+                                Sauvegarder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paramètres de données -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-database me-2"></i>
+                        Affichage des Données
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="dataForm">
+                        <div class="mb-3">
+                            <label for="itemsPerPage" class="form-label">Éléments par page</label>
+                            <select class="form-select" id="itemsPerPage" name="items_per_page">
+                                <option value="10">10 éléments</option>
+                                <option value="25">25 éléments</option>
+                                <option value="50">50 éléments</option>
+                                <option value="100">100 éléments</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="showFilters" name="show_filters">
+                                <label class="form-check-label" for="showFilters">
+                                    Afficher les filtres par défaut
+                                </label>
+                                <div class="form-text">Afficher automatiquement les panneaux de filtres</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="enableExport" name="enable_export">
+                                <label class="form-check-label" for="enableExport">
+                                    Activer l'export CSV
+                                </label>
+                                <div class="form-text">Permettre l'export des données en CSV</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save me-2"></i>
+                                Sauvegarder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions avancées -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-tools me-2"></i>
+                        Actions Avancées
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <button type="button" class="btn btn-outline-primary w-100" onclick="resetSettings()">
+                                <i class="fas fa-undo me-2"></i>
+                                Réinitialiser les paramètres
+                            </button>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button type="button" class="btn btn-outline-info w-100" onclick="exportSettings()">
+                                <i class="fas fa-download me-2"></i>
+                                Exporter les paramètres
+                            </button>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button type="button" class="btn btn-outline-success w-100" onclick="importSettings()">
+                                <i class="fas fa-upload me-2"></i>
+                                Importer les paramètres
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i id="toastIcon" class="fas fa-info-circle me-2"></i>
+            <strong id="toastTitle" class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div id="toastBody" class="toast-body">
+            Message de notification
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Configuration
+const API_BASE = '';
+
+// Éléments DOM
+let notificationForm, appearanceForm, mapForm, dataForm, notificationToast;
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔄 Initialisation de la page paramètres');
+    
+    // Initialiser les éléments
+    notificationForm = document.getElementById('notificationForm');
+    appearanceForm = document.getElementById('appearanceForm');
+    mapForm = document.getElementById('mapForm');
+    dataForm = document.getElementById('dataForm');
+    notificationToast = new bootstrap.Toast(document.getElementById('notificationToast'));
+    
+    // Charger les paramètres
+    loadSettings();
+    
+    // Événements
+    notificationForm.addEventListener('submit', handleNotificationSubmit);
+    appearanceForm.addEventListener('submit', handleAppearanceSubmit);
+    mapForm.addEventListener('submit', handleMapSubmit);
+    dataForm.addEventListener('submit', handleDataSubmit);
+    
+    // Événement pour le zoom
+    document.getElementById('defaultZoom').addEventListener('input', function() {
+        document.getElementById('zoomValue').textContent = this.value;
+    });
+    
+    console.log('✅ Page paramètres initialisée');
+});
+
+// Charger les paramètres
+async function loadSettings() {
+    console.log('🔄 Chargement des paramètres');
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/settings`);
+        const result = await response.json();
+        
+        if (result.success) {
+            const settings = result.data;
+            
+            // Remplir les formulaires
+            document.getElementById('emailNotifications').checked = settings.notifications_email || false;
+            document.getElementById('browserNotifications').checked = settings.notifications_browser || false;
+            document.getElementById('theme').value = settings.theme || 'light';
+            document.getElementById('language').value = settings.language || 'fr';
+            document.getElementById('timezone').value = settings.timezone || 'Africa/Casablanca';
+            document.getElementById('itemsPerPage').value = settings.items_per_page || 10;
+            
+            console.log('✅ Paramètres chargés avec succès');
+        } else {
+            console.error('❌ Erreur lors du chargement des paramètres:', result.error);
+            showNotification('Erreur lors du chargement des paramètres', 'error');
+        }
+    } catch (error) {
+        console.error('❌ Erreur réseau:', error);
+        showNotification('Erreur de connexion', 'error');
+    }
+}
+
+// Gérer la soumission du formulaire de notifications
+async function handleNotificationSubmit(event) {
+    event.preventDefault();
+    console.log('🔄 Sauvegarde des paramètres de notifications');
+    
+    const formData = new FormData(notificationForm);
+    const settings = {
+        notifications_email: formData.get('notifications_email') === 'on',
+        notifications_browser: formData.get('notifications_browser') === 'on',
+        notification_frequency: formData.get('notification_frequency')
+    };
+    
+    await saveSettings(settings, 'Notifications');
+}
+
+// Gérer la soumission du formulaire d'apparence
+async function handleAppearanceSubmit(event) {
+    event.preventDefault();
+    console.log('🔄 Sauvegarde des paramètres d\'apparence');
+    
+    const formData = new FormData(appearanceForm);
+    const settings = {
+        theme: formData.get('theme'),
+        language: formData.get('language'),
+        timezone: formData.get('timezone')
+    };
+    
+    await saveSettings(settings, 'Apparence');
+}
+
+// Gérer la soumission du formulaire de carte
+async function handleMapSubmit(event) {
+    event.preventDefault();
+    console.log('🔄 Sauvegarde des paramètres de carte');
+    
+    const formData = new FormData(mapForm);
+    const settings = {
+        default_zoom: parseInt(formData.get('default_zoom')),
+        auto_refresh: formData.get('auto_refresh') === 'on',
+        refresh_interval: parseInt(formData.get('refresh_interval'))
+    };
+    
+    await saveSettings(settings, 'Carte');
+}
+
+// Gérer la soumission du formulaire de données
+async function handleDataSubmit(event) {
+    event.preventDefault();
+    console.log('🔄 Sauvegarde des paramètres de données');
+    
+    const formData = new FormData(dataForm);
+    const settings = {
+        items_per_page: parseInt(formData.get('items_per_page')),
+        show_filters: formData.get('show_filters') === 'on',
+        enable_export: formData.get('enable_export') === 'on'
+    };
+    
+    await saveSettings(settings, 'Données');
+}
+
+// Sauvegarder les paramètres
+async function saveSettings(settings, section) {
+    try {
+        const response = await fetch(`${API_BASE}/api/settings`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(settings)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log(`✅ Paramètres ${section} sauvegardés avec succès`);
+            showNotification(`Paramètres ${section} sauvegardés avec succès`, 'success');
+        } else {
+            console.error(`❌ Erreur lors de la sauvegarde des paramètres ${section}:`, result.error);
+            showNotification(`Erreur: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('❌ Erreur réseau:', error);
+        showNotification('Erreur de connexion', 'error');
+    }
+}
+
+// Réinitialiser les paramètres
+function resetSettings() {
+    if (confirm('Êtes-vous sûr de vouloir réinitialiser tous les paramètres ?')) {
+        console.log('🔄 Réinitialisation des paramètres');
+        
+        // Réinitialiser les formulaires
+        notificationForm.reset();
+        appearanceForm.reset();
+        mapForm.reset();
+        dataForm.reset();
+        
+        // Remettre les valeurs par défaut
+        document.getElementById('theme').value = 'light';
+        document.getElementById('language').value = 'fr';
+        document.getElementById('timezone').value = 'Africa/Casablanca';
+        document.getElementById('itemsPerPage').value = 10;
+        document.getElementById('defaultZoom').value = 6;
+        document.getElementById('zoomValue').textContent = '6';
+        
+        showNotification('Paramètres réinitialisés', 'success');
+    }
+}
+
+// Exporter les paramètres
+function exportSettings() {
+    console.log('🔄 Export des paramètres');
+    
+    // Récupérer tous les paramètres actuels
+    const settings = {
+        notifications: {
+            email: document.getElementById('emailNotifications').checked,
+            browser: document.getElementById('browserNotifications').checked,
+            frequency: document.getElementById('notificationFrequency').value
+        },
+        appearance: {
+            theme: document.getElementById('theme').value,
+            language: document.getElementById('language').value,
+            timezone: document.getElementById('timezone').value
+        },
+        map: {
+            default_zoom: document.getElementById('defaultZoom').value,
+            auto_refresh: document.getElementById('autoRefresh').checked,
+            refresh_interval: document.getElementById('refreshInterval').value
+        },
+        data: {
+            items_per_page: document.getElementById('itemsPerPage').value,
+            show_filters: document.getElementById('showFilters').checked,
+            enable_export: document.getElementById('enableExport').checked
+        }
+    };
+    
+    // Créer et télécharger le fichier
+    const dataStr = JSON.stringify(settings, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'oncf_gis_settings.json';
+    link.click();
+    
+    URL.revokeObjectURL(url);
+    showNotification('Paramètres exportés avec succès', 'success');
+}
+
+// Importer les paramètres
+function importSettings() {
+    console.log('🔄 Import des paramètres');
+    
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    
+    input.onchange = function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const settings = JSON.parse(e.target.result);
+                    
+                    // Appliquer les paramètres
+                    if (settings.notifications) {
+                        document.getElementById('emailNotifications').checked = settings.notifications.email;
+                        document.getElementById('browserNotifications').checked = settings.notifications.browser;
+                        document.getElementById('notificationFrequency').value = settings.notifications.frequency;
+                    }
+                    
+                    if (settings.appearance) {
+                        document.getElementById('theme').value = settings.appearance.theme;
+                        document.getElementById('language').value = settings.appearance.language;
+                        document.getElementById('timezone').value = settings.appearance.timezone;
+                    }
+                    
+                    if (settings.map) {
+                        document.getElementById('defaultZoom').value = settings.map.default_zoom;
+                        document.getElementById('zoomValue').textContent = settings.map.default_zoom;
+                        document.getElementById('autoRefresh').checked = settings.map.auto_refresh;
+                        document.getElementById('refreshInterval').value = settings.map.refresh_interval;
+                    }
+                    
+                    if (settings.data) {
+                        document.getElementById('itemsPerPage').value = settings.data.items_per_page;
+                        document.getElementById('showFilters').checked = settings.data.show_filters;
+                        document.getElementById('enableExport').checked = settings.data.enable_export;
+                    }
+                    
+                    showNotification('Paramètres importés avec succès', 'success');
+                } catch (error) {
+                    console.error('❌ Erreur lors de l\'import:', error);
+                    showNotification('Erreur lors de l\'import du fichier', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+    
+    input.click();
+}
+
+// Afficher une notification
+function showNotification(message, type = 'info') {
+    const toast = document.getElementById('notificationToast');
+    const icon = document.getElementById('toastIcon');
+    const title = document.getElementById('toastTitle');
+    const body = document.getElementById('toastBody');
+    
+    // Configurer l'apparence selon le type
+    switch (type) {
+        case 'success':
+            icon.className = 'fas fa-check-circle text-success me-2';
+            title.textContent = 'Succès';
+            break;
+        case 'error':
+            icon.className = 'fas fa-exclamation-circle text-danger me-2';
+            title.textContent = 'Erreur';
+            break;
+        case 'warning':
+            icon.className = 'fas fa-exclamation-triangle text-warning me-2';
+            title.textContent = 'Attention';
+            break;
+        default:
+            icon.className = 'fas fa-info-circle text-info me-2';
+            title.textContent = 'Information';
+    }
+    
+    body.textContent = message;
+    notificationToast.show();
+}
+</script>
+{% endblock %}

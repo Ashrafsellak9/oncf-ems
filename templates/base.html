@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url_for('index') }}">
                 <i class="fas fa-train me-2"></i>
-                <strong>ONCF GIS</strong>
+                <strong>ONCF</strong>
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -71,12 +71,12 @@
                             <li><h6 class="dropdown-header">{{ current_user.email }}</h6></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ url_for('profile') }}">
                                     <i class="fas fa-user me-2"></i>Profil
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ url_for('parametres') }}">
                                     <i class="fas fa-cog me-2"></i>Paramètres
                                 </a>
                             </li>

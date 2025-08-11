@@ -658,8 +658,17 @@ async function refreshIncidents() {
  * Enregistrer un nouvel incident
  */
 async function saveNewIncident() {
+    console.log('🔄 Début de saveNewIncident()');
+    
     const form = document.getElementById('newIncidentForm');
+    if (!form) {
+        console.error('❌ Formulaire incident non trouvé');
+        showNotification('Erreur: Formulaire non trouvé', 'error');
+        return;
+    }
+    
     if (!form.checkValidity()) {
+        console.log('⚠️ Formulaire invalide, affichage des erreurs');
         form.reportValidity();
         return;
     }
@@ -676,6 +685,8 @@ async function saveNewIncident() {
             statut: document.getElementById('incidentStatut').value
         };
         
+        console.log('📤 Données de l\'incident:', incidentData);
+        
         const response = await fetch(`${API_BASE}/evenements`, {
             method: 'POST',
             headers: {
@@ -684,12 +695,26 @@ async function saveNewIncident() {
             body: JSON.stringify(incidentData)
         });
         
+        console.log('📥 Réponse reçue, status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
         const result = await response.json();
+        console.log('📋 Résultat:', result);
         
         if (result.success) {
+            console.log('✅ Succès, fermeture de la modal');
+            
             // Fermer la modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('newIncidentModal'));
-            modal.hide();
+            const modalElement = document.getElementById('newIncidentModal');
+            if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                modal.hide();
+            } else {
+                console.error('❌ Élément modal non trouvé');
+            }
             
             // Réinitialiser le formulaire
             form.reset();
@@ -700,13 +725,15 @@ async function saveNewIncident() {
             
             showNotification('Incident créé avec succès', 'success');
         } else {
+            console.error('❌ Erreur API:', result.error);
             showNotification(`Erreur: ${result.error}`, 'error');
         }
     } catch (error) {
-        console.error('Erreur lors de la création:', error);
+        console.error('❌ Erreur lors de la création:', error);
         showNotification('Erreur lors de la création de l\'incident', 'error');
     } finally {
         showLoading(false);
+        console.log('🏁 Fin de saveNewIncident()');
     }
 }
 
@@ -778,7 +805,8 @@ async function updateIncident() {
         
         if (result.success) {
             // Fermer la modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('newIncidentModal'));
+            const modalElement = document.getElementById('newIncidentModal');
+            const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
             modal.hide();
             
             // Réinitialiser le formulaire et le titre

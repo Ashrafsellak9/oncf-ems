@@ -1133,5 +1133,122 @@ def gares():
 def incidents():
     return render_template('incidents.html')
 
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
+
+@app.route('/parametres')
+@login_required
+def parametres():
+    return render_template('parametres.html')
+
+@app.route('/api/profile', methods=['GET', 'PUT'])
+@login_required
+def api_profile():
+    """API pour récupérer et modifier le profil utilisateur"""
+    if request.method == 'GET':
+        return jsonify({
+            'success': True,
+            'data': {
+                'id': current_user.id,
+                'username': current_user.username,
+                'email': current_user.email,
+                'first_name': current_user.first_name,
+                'last_name': current_user.last_name,
+                'role': current_user.role,
+                'is_active': current_user.is_active,
+                'created_at': current_user.created_at.isoformat() if current_user.created_at else None
+            }
+        })
+    
+    elif request.method == 'PUT':
+        try:
+            data = request.get_json()
+            
+            # Validation des données
+            if 'first_name' in data and data['first_name']:
+                current_user.first_name = data['first_name']
+            if 'last_name' in data and data['last_name']:
+                current_user.last_name = data['last_name']
+            if 'email' in data and data['email']:
+                # Vérifier que l'email n'est pas déjà utilisé
+                existing_user = User.query.filter_by(email=data['email']).first()
+                if existing_user and existing_user.id != current_user.id:
+                    return jsonify({'success': False, 'error': 'Cet email est déjà utilisé'})
+                current_user.email = data['email']
+            
+            db.session.commit()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Profil mis à jour avec succès'
+            })
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/change-password', methods=['POST'])
+@login_required
+def api_change_password():
+    """API pour changer le mot de passe"""
+    try:
+        data = request.get_json()
+        
+        # Validation des données
+        if not data.get('current_password'):
+            return jsonify({'success': False, 'error': 'Mot de passe actuel requis'})
+        if not data.get('new_password'):
+            return jsonify({'success': False, 'error': 'Nouveau mot de passe requis'})
+        if len(data['new_password']) < 6:
+            return jsonify({'success': False, 'error': 'Le nouveau mot de passe doit contenir au moins 6 caractères'})
+        
+        # Vérifier le mot de passe actuel
+        if not current_user.check_password(data['current_password']):
+            return jsonify({'success': False, 'error': 'Mot de passe actuel incorrect'})
+        
+        # Changer le mot de passe
+        current_user.set_password(data['new_password'])
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Mot de passe changé avec succès'
+        })
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/settings', methods=['GET', 'PUT'])
+@login_required
+def api_settings():
+    """API pour récupérer et modifier les paramètres utilisateur"""
+    if request.method == 'GET':
+        # Récupérer les paramètres actuels (peut être étendu avec une table settings)
+        return jsonify({
+            'success': True,
+            'data': {
+                'notifications_email': True,
+                'notifications_browser': True,
+                'theme': 'light',
+                'language': 'fr',
+                'timezone': 'Africa/Casablanca',
+                'items_per_page': 10
+            }
+        })
+    
+    elif request.method == 'PUT':
+        try:
+            data = request.get_json()
+            
+            # Ici on pourrait sauvegarder dans une table settings
+            # Pour l'instant, on retourne juste un succès
+            return jsonify({
+                'success': True,
+                'message': 'Paramètres mis à jour avec succès'
+            })
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)})
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000) 

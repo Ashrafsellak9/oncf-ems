@@ -370,16 +370,40 @@ function showGareDetails(gareId) {
  * Ajouter une nouvelle gare
  */
 function addNewGare() {
+    console.log('🔄 Début de addNewGare()');
+    
     isEditing = false;
     selectedGare = null;
     
     // Réinitialiser le formulaire
-    document.getElementById('gareForm').reset();
-    document.getElementById('gareFormTitle').innerHTML = '<i class="fas fa-plus me-2"></i>Nouvelle Gare';
+    const form = document.getElementById('gareForm');
+    if (form) {
+        form.reset();
+        console.log('✅ Formulaire réinitialisé');
+    } else {
+        console.error('❌ Formulaire non trouvé');
+    }
+    
+    // Mettre à jour le titre
+    const titleElement = document.getElementById('gareFormTitle');
+    if (titleElement) {
+        titleElement.innerHTML = '<i class="fas fa-plus me-2"></i>Nouvelle Gare';
+        console.log('✅ Titre mis à jour');
+    } else {
+        console.error('❌ Élément titre non trouvé');
+    }
     
     // Afficher la modal
-    const modal = new bootstrap.Modal(document.getElementById('gareFormModal'));
-    modal.show();
+    const modalElement = document.getElementById('gareFormModal');
+    if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+        console.log('✅ Modal affichée');
+    } else {
+        console.error('❌ Élément modal non trouvé');
+    }
+    
+    console.log('🏁 Fin de addNewGare()');
 }
 
 /**
@@ -413,8 +437,17 @@ function editGare(gareId) {
  * Sauvegarder une gare (création ou modification)
  */
 async function saveGare() {
+    console.log('🔄 Début de saveGare()');
+    
     const form = document.getElementById('gareForm');
+    if (!form) {
+        console.error('❌ Formulaire gare non trouvé');
+        showNotification('Erreur: Formulaire non trouvé', 'error');
+        return;
+    }
+    
     if (!form.checkValidity()) {
+        console.log('⚠️ Formulaire invalide, affichage des erreurs');
         form.reportValidity();
         return;
     }
@@ -433,11 +466,17 @@ async function saveGare() {
             codereseau: document.getElementById('gareCodeReseau').value
         };
         
+        console.log('📤 Données de la gare:', gareData);
+        console.log('🔧 Mode édition:', isEditing);
+        
         const url = isEditing ? 
             `${API_BASE}/gares/${selectedGare.id}` : 
             `${API_BASE}/gares`;
         
         const method = isEditing ? 'PUT' : 'POST';
+        
+        console.log('🌐 URL:', url);
+        console.log('📡 Méthode:', method);
         
         const response = await fetch(url, {
             method: method,
@@ -447,12 +486,26 @@ async function saveGare() {
             body: JSON.stringify(gareData)
         });
         
+        console.log('📥 Réponse reçue, status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
         const result = await response.json();
+        console.log('📋 Résultat:', result);
         
         if (result.success) {
+            console.log('✅ Succès, fermeture de la modal');
+            
             // Fermer la modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('gareFormModal'));
-            modal.hide();
+            const modalElement = document.getElementById('gareFormModal');
+            if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                modal.hide();
+            } else {
+                console.error('❌ Élément modal non trouvé');
+            }
             
             // Recharger les gares
             await loadGares();
@@ -463,13 +516,15 @@ async function saveGare() {
                 'success'
             );
         } else {
+            console.error('❌ Erreur API:', result.error);
             showNotification(`Erreur: ${result.error}`, 'error');
         }
     } catch (error) {
-        console.error('Erreur lors de la sauvegarde:', error);
+        console.error('❌ Erreur lors de la sauvegarde:', error);
         showNotification('Erreur lors de la sauvegarde de la gare', 'error');
     } finally {
         showLoading(false);
+        console.log('🏁 Fin de saveGare()');
     }
 }
 

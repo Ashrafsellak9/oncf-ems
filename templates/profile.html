@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block title %}Profil Utilisateur - ONCF GIS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0">
+                    <i class="fas fa-user-circle me-2 text-primary"></i>
+                    Mon Profil
+                </h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Accueil</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Profil</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Informations du profil -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-user-edit me-2"></i>
+                        Informations Personnelles
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="profileForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">Prénom *</label>
+                                <input type="text" class="form-control" id="firstName" name="first_name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Nom *</label>
+                                <input type="text" class="form-control" id="lastName" name="last_name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="username" class="form-label">Nom d'utilisateur</label>
+                                <input type="text" class="form-control" id="username" readonly>
+                                <div class="form-text">Le nom d'utilisateur ne peut pas être modifié</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="role" class="form-label">Rôle</label>
+                                <input type="text" class="form-control" id="role" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="createdAt" class="form-label">Membre depuis</label>
+                                <input type="text" class="form-control" id="createdAt" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>
+                                Sauvegarder les modifications
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Changement de mot de passe -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-key me-2"></i>
+                        Changer le Mot de Passe
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="passwordForm">
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Mot de passe actuel *</label>
+                            <input type="password" class="form-control" id="currentPassword" name="current_password" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Nouveau mot de passe *</label>
+                            <input type="password" class="form-control" id="newPassword" name="new_password" required>
+                            <div class="form-text">Minimum 6 caractères</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirmer le nouveau mot de passe *</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-key me-2"></i>
+                                Changer le mot de passe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Informations de sécurité -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        Informations de Sécurité
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>Compte actif</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-clock text-info me-2"></i>
+                        <span>Dernière connexion: <span id="lastLogin">Aujourd'hui</span></span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-calendar text-primary me-2"></i>
+                        <span>Créé le: <span id="accountCreated"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i id="toastIcon" class="fas fa-info-circle me-2"></i>
+            <strong id="toastTitle" class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div id="toastBody" class="toast-body">
+            Message de notification
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Configuration
+const API_BASE = '';
+
+// Éléments DOM
+let profileForm, passwordForm, notificationToast;
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔄 Initialisation de la page profil');
+    
+    // Initialiser les éléments
+    profileForm = document.getElementById('profileForm');
+    passwordForm = document.getElementById('passwordForm');
+    notificationToast = new bootstrap.Toast(document.getElementById('notificationToast'));
+    
+    // Charger les données du profil
+    loadProfile();
+    
+    // Événements
+    profileForm.addEventListener('submit', handleProfileSubmit);
+    passwordForm.addEventListener('submit', handlePasswordSubmit);
+    
+    console.log('✅ Page profil initialisée');
+});
+
+// Charger les données du profil
+async function loadProfile() {
+    console.log('🔄 Chargement du profil');
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/profile`);
+        const result = await response.json();
+        
+        if (result.success) {
+            const user = result.data;
+            
+            // Remplir le formulaire
+            document.getElementById('firstName').value = user.first_name || '';
+            document.getElementById('lastName').value = user.last_name || '';
+            document.getElementById('username').value = user.username || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('role').value = user.role || 'Utilisateur';
+            
+            // Formater la date de création
+            if (user.created_at) {
+                const createdDate = new Date(user.created_at);
+                document.getElementById('createdAt').value = createdDate.toLocaleDateString('fr-FR');
+                document.getElementById('accountCreated').textContent = createdDate.toLocaleDateString('fr-FR');
+            }
+            
+            console.log('✅ Profil chargé avec succès');
+        } else {
+            console.error('❌ Erreur lors du chargement du profil:', result.error);
+            showNotification('Erreur lors du chargement du profil', 'error');
+        }
+    } catch (error) {
+        console.error('❌ Erreur réseau:', error);
+        showNotification('Erreur de connexion', 'error');
+    }
+}
+
+// Gérer la soumission du formulaire de profil
+async function handleProfileSubmit(event) {
+    event.preventDefault();
+    console.log('🔄 Soumission du formulaire de profil');
+    
+    const formData = new FormData(profileForm);
+    const profileData = {
+        first_name: formData.get('first_name'),
+        last_name: formData.get('last_name'),
+        email: formData.get('email')
+    };
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/profile`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(profileData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log('✅ Profil mis à jour avec succès');
+            showNotification('Profil mis à jour avec succès', 'success');
+            
+            // Mettre à jour l'affichage du nom dans la navbar
+            const userDropdown = document.querySelector('#userDropdown');
+            if (userDropdown) {
+                userDropdown.innerHTML = `<i class="fas fa-user-circle me-1"></i>${profileData.first_name} ${profileData.last_name}`;
+            }
+        } else {
+            console.error('❌ Erreur lors de la mise à jour:', result.error);
+            showNotification(`Erreur: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('❌ Erreur réseau:', error);
+        showNotification('Erreur de connexion', 'error');
+    }
+}
+
+// Gérer la soumission du formulaire de mot de passe
+async function handlePasswordSubmit(event) {
+    event.preventDefault();
+    console.log('🔄 Soumission du formulaire de mot de passe');
+    
+    const formData = new FormData(passwordForm);
+    const currentPassword = formData.get('current_password');
+    const newPassword = formData.get('new_password');
+    const confirmPassword = formData.get('confirm_password');
+    
+    // Validation côté client
+    if (newPassword.length < 6) {
+        showNotification('Le nouveau mot de passe doit contenir au moins 6 caractères', 'error');
+        return;
+    }
+    
+    if (newPassword !== confirmPassword) {
+        showNotification('Les mots de passe ne correspondent pas', 'error');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/change-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                current_password: currentPassword,
+                new_password: newPassword
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log('✅ Mot de passe changé avec succès');
+            showNotification('Mot de passe changé avec succès', 'success');
+            
+            // Réinitialiser le formulaire
+            passwordForm.reset();
+        } else {
+            console.error('❌ Erreur lors du changement de mot de passe:', result.error);
+            showNotification(`Erreur: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('❌ Erreur réseau:', error);
+        showNotification('Erreur de connexion', 'error');
+    }
+}
+
+// Afficher une notification
+function showNotification(message, type = 'info') {
+    const toast = document.getElementById('notificationToast');
+    const icon = document.getElementById('toastIcon');
+    const title = document.getElementById('toastTitle');
+    const body = document.getElementById('toastBody');
+    
+    // Configurer l'apparence selon le type
+    switch (type) {
+        case 'success':
+            icon.className = 'fas fa-check-circle text-success me-2';
+            title.textContent = 'Succès';
+            break;
+        case 'error':
+            icon.className = 'fas fa-exclamation-circle text-danger me-2';
+            title.textContent = 'Erreur';
+            break;
+        case 'warning':
+            icon.className = 'fas fa-exclamation-triangle text-warning me-2';
+            title.textContent = 'Attention';
+            break;
+        default:
+            icon.className = 'fas fa-info-circle text-info me-2';
+            title.textContent = 'Information';
+    }
+    
+    body.textContent = message;
+    notificationToast.show();
+}
+</script>
+{% endblock %}
