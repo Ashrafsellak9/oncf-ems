@@ -657,38 +657,57 @@ async function refreshIncidents() {
 /**
  * Enregistrer un nouvel incident
  */
-function saveNewIncident() {
+async function saveNewIncident() {
     const form = document.getElementById('newIncidentForm');
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
     }
     
-    // Simuler l'enregistrement (à remplacer par un appel API réel)
-    const newIncident = {
-        id: Date.now(), // ID temporaire
-        type_id: parseInt(document.getElementById('incidentType').value),
-        localisation_id: parseInt(document.getElementById('incidentLocation').value),
-        date_debut: document.getElementById('incidentDateDebut').value,
-        date_fin: document.getElementById('incidentDateFin').value || null,
-        description: document.getElementById('incidentDescription').value,
-        statut: document.getElementById('incidentStatut').value
-    };
+    showLoading(true);
     
-    // Ajouter à la liste (simulation)
-    allIncidents.unshift(newIncident);
-    
-    // Fermer la modal
-    const modal = bootstrap.Modal.getInstance(document.getElementById('newIncidentModal'));
-    modal.hide();
-    
-    // Réinitialiser le formulaire
-    form.reset();
-    
-    // Actualiser l'affichage
-    applyFilters();
-    
-    showNotification('Incident créé avec succès', 'success');
+    try {
+        const incidentData = {
+            type_id: parseInt(document.getElementById('incidentType').value),
+            localisation_id: parseInt(document.getElementById('incidentLocation').value),
+            date_debut: document.getElementById('incidentDateDebut').value,
+            date_fin: document.getElementById('incidentDateFin').value || null,
+            description: document.getElementById('incidentDescription').value,
+            statut: document.getElementById('incidentStatut').value
+        };
+        
+        const response = await fetch(`${API_BASE}/evenements`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(incidentData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Fermer la modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('newIncidentModal'));
+            modal.hide();
+            
+            // Réinitialiser le formulaire
+            form.reset();
+            
+            // Recharger les incidents
+            await loadIncidents();
+            applyFilters();
+            
+            showNotification('Incident créé avec succès', 'success');
+        } else {
+            showNotification(`Erreur: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la création:', error);
+        showNotification('Erreur lors de la création de l\'incident', 'error');
+    } finally {
+        showLoading(false);
+    }
 }
 
 /**
@@ -697,7 +716,94 @@ function saveNewIncident() {
 function editIncident() {
     if (!selectedIncident) return;
     
-    showNotification('Fonctionnalité de modification en développement', 'info');
+    // Remplir le formulaire avec les données de l'incident sélectionné
+    document.getElementById('incidentType').value = selectedIncident.type_id || '';
+    document.getElementById('incidentLocation').value = selectedIncident.localisation_id || '';
+    document.getElementById('incidentDateDebut').value = selectedIncident.date_debut ? 
+        selectedIncident.date_debut.replace(' ', 'T') : '';
+    document.getElementById('incidentDateFin').value = selectedIncident.date_fin ? 
+        selectedIncident.date_fin.replace(' ', 'T') : '';
+    document.getElementById('incidentDescription').value = selectedIncident.description || '';
+    document.getElementById('incidentStatut').value = selectedIncident.statut || 'Ouvert';
+    
+    // Changer le titre de la modal
+    document.querySelector('#newIncidentModal .modal-title').textContent = 'Modifier l\'Incident';
+    
+    // Changer le bouton de sauvegarde
+    const saveButton = document.querySelector('#newIncidentModal .btn-primary');
+    saveButton.textContent = 'Modifier';
+    saveButton.onclick = updateIncident;
+    
+    // Fermer la modal de détails et ouvrir la modal de modification
+    const detailsModal = bootstrap.Modal.getInstance(document.getElementById('incidentDetailsModal'));
+    detailsModal.hide();
+    
+    const editModal = new bootstrap.Modal(document.getElementById('newIncidentModal'));
+    editModal.show();
+}
+
+/**
+ * Mettre à jour un incident existant
+ */
+async function updateIncident() {
+    if (!selectedIncident) return;
+    
+    const form = document.getElementById('newIncidentForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    
+    showLoading(true);
+    
+    try {
+        const incidentData = {
+            type_id: parseInt(document.getElementById('incidentType').value),
+            localisation_id: parseInt(document.getElementById('incidentLocation').value),
+            date_debut: document.getElementById('incidentDateDebut').value,
+            date_fin: document.getElementById('incidentDateFin').value || null,
+            resume: document.getElementById('incidentDescription').value,
+            etat: document.getElementById('incidentStatut').value
+        };
+        
+        const response = await fetch(`${API_BASE}/evenements/${selectedIncident.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(incidentData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Fermer la modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('newIncidentModal'));
+            modal.hide();
+            
+            // Réinitialiser le formulaire et le titre
+            form.reset();
+            document.querySelector('#newIncidentModal .modal-title').textContent = 'Nouveau Incident';
+            
+            // Restaurer le bouton de sauvegarde
+            const saveButton = document.querySelector('#newIncidentModal .btn-primary');
+            saveButton.textContent = 'Enregistrer';
+            saveButton.onclick = saveNewIncident;
+            
+            // Recharger les incidents
+            await loadIncidents();
+            applyFilters();
+            
+            showNotification('Incident modifié avec succès', 'success');
+        } else {
+            showNotification(`Erreur: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la modification:', error);
+        showNotification('Erreur lors de la modification de l\'incident', 'error');
+    } finally {
+        showLoading(false);
+    }
 }
 
 /**
@@ -754,3 +860,4 @@ window.refreshIncidents = refreshIncidents;
 window.applyFilters = applyFilters;
 window.saveNewIncident = saveNewIncident;
 window.editIncident = editIncident;
+window.updateIncident = updateIncident;

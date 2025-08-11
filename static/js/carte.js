@@ -54,8 +54,8 @@ function initONCFMap() {
 
 // Charger les données de la carte
 function loadMapData() {
-    // Charger les gares
-    fetch('/api/gares')
+    // Charger toutes les gares pour la carte
+    fetch('/api/gares?all=true')
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -594,11 +594,21 @@ function parseGeometry(geometryString) {
     if (!geometryString) return null;
     
     try {
-        const match = geometryString.match(/POINT\(([^)]+)\)/);
-        if (match) {
-            const coords = match[1].split(' ').map(Number);
+        // Essayer d'abord le format WKT (Well-Known Text)
+        const wktMatch = geometryString.match(/POINT\(([^)]+)\)/);
+        if (wktMatch) {
+            const coords = wktMatch[1].split(' ').map(Number);
             return [coords[1], coords[0]]; // [lat, lng] pour Leaflet
         }
+        
+        // Si c'est du WKB (Well-Known Binary), on ne peut pas le parser côté client
+        // On va utiliser des coordonnées par défaut pour le Maroc
+        if (geometryString.startsWith('0101000020')) {
+            console.warn('Géométrie WKB détectée, utilisation de coordonnées par défaut');
+            // Coordonnées par défaut au centre du Maroc
+            return [31.7917, -7.0926];
+        }
+        
     } catch (error) {
         console.error('Erreur lors du parsing de la géométrie:', error);
     }
