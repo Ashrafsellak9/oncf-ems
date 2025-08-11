@@ -208,12 +208,26 @@ def parse_wkb_point(wkb_hex):
                 y = struct.unpack('<d', y_bytes)[0]  # little endian double
                 
                 # Conversion précise avec facteurs calculés pour le Maroc
-                # Facteurs optimisés pour les coordonnées ONCF
-                lon = x / 112202.79
-                lat = y / 118170.71
+                # Facteurs optimisés pour les coordonnées ONCF avec ajustement géographique
                 
-                # Vérifier si les coordonnées sont dans les limites du Maroc
-                if -10 <= lon <= -1 and 27 <= lat <= 36:
+                # Ajuster les facteurs selon la latitude pour corriger la déformation nord-sud
+                base_lat = y / 118170.71
+                
+                # Si la latitude calculée est > 35.5, ajuster pour éviter de dépasser les limites nord
+                if base_lat > 35.5:
+                    # Facteur de correction pour le nord du Maroc - ajustement plus précis
+                    if base_lat > 36.0:
+                        lat_correction = 0.98  # Réduire de 2% pour les gares très au nord
+                    else:
+                        lat_correction = 0.99  # Réduire de 1% pour les gares du nord
+                    lat = base_lat * lat_correction
+                else:
+                    lat = base_lat
+                
+                lon = x / 112202.79
+                
+                # Vérifier si les coordonnées sont dans les limites du Maroc (plus permissives)
+                if -10 <= lon <= -1 and 27 <= lat <= 37:
                     print(f"Conversion mètres vers degrés: Lon={lon:.6f}, Lat={lat:.6f}")
                     return f"POINT({lon} {lat})"
                 else:
@@ -235,7 +249,7 @@ def parse_wkb_point(wkb_hex):
                                 transformer = Transformer.from_crs(crs, "EPSG:4326", always_xy=True)
                                 lon_proj, lat_proj = transformer.transform(x, y)
                                 
-                                if -10 <= lon_proj <= -1 and 27 <= lat_proj <= 36:
+                                if -10 <= lon_proj <= -1 and 27 <= lat_proj <= 37:
                                     print(f"Conversion {name}: Lon={lon_proj:.6f}, Lat={lat_proj:.6f}")
                                     return f"POINT({lon_proj} {lat_proj})"
                             except:
@@ -281,7 +295,7 @@ def parse_wkb_point(wkb_hex):
                     lon, lat = transformer_29n.transform(x, y)
                     
                     # Vérifier si les coordonnées sont dans des limites raisonnables pour le Maroc
-                    if -10 <= lon <= -1 and 27 <= lat <= 36:
+                    if -10 <= lon <= -1 and 27 <= lat <= 37:
                         return f"POINT({lon} {lat})"
                     
                     # Si pas dans les limites, essayer UTM Zone 30N (est du Maroc)
@@ -289,7 +303,7 @@ def parse_wkb_point(wkb_hex):
                     lon, lat = transformer_30n.transform(x, y)
                     
                     # Vérifier à nouveau les limites
-                    if -10 <= lon <= -1 and 27 <= lat <= 36:
+                    if -10 <= lon <= -1 and 27 <= lat <= 37:
                         return f"POINT({lon} {lat})"
                     
                     # Si toujours pas dans les limites, utiliser la zone 29N par défaut
@@ -327,13 +341,13 @@ def parse_wkb_point(wkb_hex):
                     transformer_29n = Transformer.from_crs("EPSG:32629", "EPSG:4326", always_xy=True)
                     lon, lat = transformer_29n.transform(x, y)
                     
-                    if -10 <= lon <= -1 and 27 <= lat <= 36:
+                    if -10 <= lon <= -1 and 27 <= lat <= 37:
                         return f"POINT({lon} {lat})"
                     
                     transformer_30n = Transformer.from_crs("EPSG:32630", "EPSG:4326", always_xy=True)
                     lon, lat = transformer_30n.transform(x, y)
                     
-                    if -10 <= lon <= -1 and 27 <= lat <= 36:
+                    if -10 <= lon <= -1 and 27 <= lat <= 37:
                         return f"POINT({lon} {lat})"
                     
                     lon, lat = transformer_29n.transform(x, y)
