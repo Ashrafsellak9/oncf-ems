@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+
+{% block title %}ONCF GIS - Carte Interactive{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="h2 mb-0">
+                <i class="fas fa-map me-2 text-primary"></i>
+                Carte Interactive du Réseau Ferroviaire
+            </h1>
+            <p class="text-muted">Visualisez le réseau ferroviaire marocain en temps réel</p>
+        </div>
+    </div>
+
+    <!-- Contrôles de la Carte -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <label for="layerSelect" class="form-label">Couches</label>
+                            <select class="form-select" id="layerSelect">
+                                <option value="all">Toutes les couches</option>
+                                <option value="gares">Gares uniquement</option>
+                                <option value="arcs">Voies uniquement</option>
+                                <option value="incidents">Incidents uniquement</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="axeFilter" class="form-label">Filtrer par Axe</label>
+                            <select class="form-select" id="axeFilter">
+                                <option value="">Tous les axes</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="typeFilter" class="form-label">Type de Gare</label>
+                            <select class="form-select" id="typeFilter">
+                                <option value="">Tous les types</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary w-100" onclick="resetMap()">
+                                <i class="fas fa-refresh me-2"></i>Réinitialiser
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Contrôles de pagination pour les incidents -->
+                    <div class="row mt-3" id="incidentPagination" style="display: none;">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="pagination-info">
+                                    <span id="incidentPaginationInfo">Affichage des incidents</span>
+                                </div>
+                                <div class="pagination-controls">
+                                    <button class="btn btn-outline-primary btn-sm" id="prevIncidents" onclick="loadPreviousIncidents()">
+                                        <i class="fas fa-chevron-left me-1"></i>Précédent
+                                    </button>
+                                    <span class="mx-2" id="incidentPageInfo">Page 1</span>
+                                    <button class="btn btn-outline-primary btn-sm" id="nextIncidents" onclick="loadNextIncidents()">
+                                        Suivant<i class="fas fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carte -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div id="map" class="map-container"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <!-- Statistiques de la Carte -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>
+                        Statistiques
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-4 mb-3">
+                            <div class="stat-number" id="mapGaresCount">-</div>
+                            <div class="stat-label">Gares visibles</div>
+                        </div>
+                        <div class="col-4 mb-3">
+                            <div class="stat-number" id="mapArcsCount">-</div>
+                            <div class="stat-label">Voies visibles</div>
+                        </div>
+                        <div class="col-4 mb-3">
+                            <div class="stat-number" id="mapIncidentsCount">-</div>
+                            <div class="stat-label">Incidents visibles</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Légende -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Légende
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="legend-item mb-2">
+                        <i class="fas fa-circle text-primary me-2"></i>
+                        <span>Gares principales</span>
+                    </div>
+                    <div class="legend-item mb-2">
+                        <i class="fas fa-circle text-success me-2"></i>
+                        <span>Gares secondaires</span>
+                    </div>
+                    <div class="legend-item mb-2">
+                        <div class="legend-line bg-primary me-2"></div>
+                        <span>Voies principales</span>
+                    </div>
+                    <div class="legend-item mb-2">
+                        <div class="legend-line bg-secondary me-2"></div>
+                        <span>Voies secondaires</span>
+                    </div>
+                    <div class="legend-item mb-2">
+                        <i class="fas fa-exclamation-triangle text-danger me-2"></i>
+                        <span>Incidents</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informations sur l'Élément Sélectionné -->
+            <div class="card" id="infoPanel" style="display: none;">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info me-2"></i>
+                        Détails
+                    </h5>
+                </div>
+                <div class="card-body" id="infoContent">
+                    <!-- Le contenu sera rempli dynamiquement -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour les détails d'une gare -->
+<div class="modal fade" id="gareDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-building me-2"></i>
+                    Détails de la Gare
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="gareModalContent">
+                <!-- Contenu dynamique -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" onclick="centerOnGare()">
+                    <i class="fas fa-crosshairs me-2"></i>Centrer sur la carte
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.legend-line {
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+}
+
+#map {
+    height: 600px;
+    width: 100%;
+}
+
+.map-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.leaflet-popup-content {
+    margin: 10px;
+    min-width: 200px;
+}
+
+.gare-popup {
+    text-align: center;
+}
+
+.gare-popup h6 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.gare-popup .badge {
+    margin: 2px;
+}
+
+.arc-popup {
+    text-align: left;
+}
+
+.arc-popup h6 {
+    color: var(--success-color);
+    margin-bottom: 10px;
+}
+
+.arc-popup .info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.arc-popup .info-label {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.arc-popup .info-value {
+    color: var(--dark-color);
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/carte.js') }}"></script>
+{% endblock %} 

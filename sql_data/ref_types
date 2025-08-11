@@ -1,0 +1,58 @@
+1,2020-02-20 00:00:00,Accident,1,2,t,f
+2,2020-02-20 00:00:00,Accident de personnes,1,2,t,f
+3,2020-02-20 00:00:00,Acte de malveillance,1,2,t,f
+4,2020-02-20 00:00:00,Arrêt accidentel,1,2,t,f
+5,2020-02-20 00:00:00,Intempérie,1,2,t,f
+6,2020-02-20 00:00:00,Séisme,1,2,t,f
+8,2020-02-20 00:00:00,Circulation,2,2,t,f
+9,2020-02-20 00:00:00,Manœuvre (circulation),2,2,t,f
+10,2025-04-04 09:51:09.070857,Type modifié,2,2,t,f
+12,2020-02-20 00:00:00,Service des trains,2,2,t,f
+13,2020-02-20 00:00:00,Bâtiment,3,2,t,f
+14,2020-02-20 00:00:00,Caténaire,3,2,t,f
+15,2020-02-20 00:00:00,Détecteurs,3,2,t,f
+16,2020-02-20 00:00:00,Signalisation,3,2,t,f
+17,2020-02-20 00:00:00,Télécom,3,2,t,f
+18,2020-02-20 00:00:00,Sous-station,3,2,t,f
+19,2020-02-20 00:00:00,Travaux,3,2,t,f
+20,2020-02-20 00:00:00,Incidents de travaux,3,2,t,f
+21,2020-02-20 00:00:00,Voie,3,2,t,f
+22,2020-02-20 00:00:00,ERTMS et équipements (sol),3,2,t,f
+23,2020-02-20 00:00:00,Matériel,4,2,t,f
+24,2020-02-20 00:00:00,Service machines,4,2,t,f
+25,2020-02-20 00:00:00,Traction,4,2,t,f
+26,2020-02-20 00:00:00,ERTMS et équipements (Bord),4,2,t,f
+30,2020-02-20 00:00:00,Divers,5,2,t,f
+31,2021-05-21 00:00:00,Activités illicites,6,1,t,f
+32,2021-05-21 00:00:00,Incivilités,6,1,t,f
+33,2021-05-21 00:00:00,Présence non justifiée,6,1,t,f
+34,2021-05-21 00:00:00,Attentat terroriste,9,1,t,f
+35,2021-07-02 00:00:00,Dépôt d'objet sur la voie,9,1,t,f
+36,2021-07-02 00:00:00,Déprédation,9,1,t,f
+37,2021-07-02 00:00:00,Gravures et graffitis,9,1,t,f
+38,2021-07-02 00:00:00,Incendie (AMV),9,1,t,f
+39,2021-07-02 00:00:00,Jet de projectiles,9,1,t,f
+40,2021-07-02 00:00:00,Usage injustifié,9,1,t,f
+41,2021-07-02 00:00:00,Atteinte aux personnes,10,1,t,f
+42,2021-07-02 00:00:00,Coups/blessures volontaires,10,1,t,f
+43,2021-07-02 00:00:00,Outrage,10,1,t,f
+44,2021-07-02 00:00:00,Rebellions,10,1,t,f
+45,2021-07-02 00:00:00,Escroquerie,11,1,t,f
+47,2021-07-02 00:00:00,Vol avec menace,11,1,t,f
+48,2021-07-02 00:00:00,Vol avec violence,11,1,t,f
+49,2021-07-02 00:00:00,Vol simple,11,1,t,f
+50,2021-10-15 00:00:00,Incendie (ENV),6,1,t,f
+51,2021-11-08 12:00:00,Vol biens ONCF,9,1,t,f
+52,2022-01-01 00:00:00,Systèmes/Echo-Système,5,2,t,f
+53,2022-01-01 00:00:00,Service machines,2,2,t,f
+54,2022-01-01 00:00:00,Autres,1,2,t,f
+55,2022-01-01 00:00:00,Autres,2,2,t,f
+56,2023-03-17 00:00:00,Harcèlement,10,1,t,f
+57,2024-09-23 00:00:00,Vol marchandise,9,1,t,f
+58,2024-12-19 10:50:17.446502,Test,,,t,f
+59,2025-01-23 10:54:00,Présence des passagers subsahariens,6,1,t,f
+60,2025-01-23 10:54:00,Dépôt d’objets sur la caténaire,9,1,t,f
+61,2025-01-23 10:54:00,Présence d’objet sur la caténaire,6,1,t,f
+62,2025-01-23 11:07:00,Usage justifié,6,1,t,f
+63,2025-01-23 11:07:00,Chute du train,6,1,t,f
+75,2025-04-04 09:51:42.506934,type 3,12,1,t,f

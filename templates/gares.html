@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+
+{% block title %}ONCF GIS - Gestion des Gares{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="h2 mb-0">
+                <i class="fas fa-building me-2 text-primary"></i>
+                Gestion des Gares
+            </h1>
+            <p class="text-muted">Consultez et gérez les informations des gares du réseau ONCF</p>
+        </div>
+    </div>
+
+    <!-- Filtres et Recherche -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-end">
+                        <div class="col-md-3">
+                            <label for="searchGares" class="form-label">Recherche</label>
+                            <input type="text" class="form-control" id="searchGares" placeholder="Nom, code ou ville...">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="filterAxe" class="form-label">Axe</label>
+                            <select class="form-select" id="filterAxe">
+                                <option value="">Tous les axes</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="filterType" class="form-label">Type</label>
+                            <select class="form-select" id="filterType">
+                                <option value="">Tous les types</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="filterEtat" class="form-label">État</label>
+                            <select class="form-select" id="filterEtat">
+                                <option value="">Tous les états</option>
+                                <option value="ACTIVE">Active</option>
+                                <option value="PASSIVE">Passive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary" onclick="applyFilters()">
+                                    <i class="fas fa-filter me-2"></i>Filtrer
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="resetFilters()">
+                                    <i class="fas fa-undo me-2"></i>Réinitialiser
+                                </button>
+                                <button class="btn btn-success" onclick="exportGares()">
+                                    <i class="fas fa-download me-2"></i>Exporter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques Rapides -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="dashboard-card text-center">
+                <div class="stat-number" id="totalGaresCount">-</div>
+                <div class="stat-label">Total Gares</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="dashboard-card text-center">
+                <div class="stat-number text-success" id="activeGaresCount">-</div>
+                <div class="stat-label">Gares Actives</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="dashboard-card text-center">
+                <div class="stat-number text-warning" id="passiveGaresCount">-</div>
+                <div class="stat-label">Gares Passives</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="dashboard-card text-center">
+                <div class="stat-number text-info" id="filteredGaresCount">-</div>
+                <div class="stat-label">Résultats Filtrés</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau des Gares -->
+    <div class="row">
+        <div class="col-12">
+            <div class="dashboard-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="mb-0">
+                        <i class="fas fa-table me-2 text-primary"></i>
+                        Liste des Gares
+                    </h3>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="refreshGares()">
+                            <i class="fas fa-sync-alt me-1"></i>Actualiser
+                        </button>
+                        <button class="btn btn-sm btn-success" onclick="addNewGare()">
+                            <i class="fas fa-plus me-1"></i>Nouvelle Gare
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover" id="garesTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                                </th>
+                                <th onclick="sortTable(1)">Nom de la Gare <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable(2)">Code <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable(3)">Type <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable(4)">Axe <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable(5)">Ville <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable(6)">État <i class="fas fa-sort"></i></th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="garesTableBody">
+                            <tr>
+                                <td colspan="8" class="text-center">
+                                    <div class="loading"></div>
+                                    Chargement des données...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="d-flex align-items-center">
+                        <label class="me-2">Afficher:</label>
+                        <select class="form-select form-select-sm me-3" style="width: auto;" id="pageSize">
+                            <option value="10">10</option>
+                            <option value="25" selected>25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span class="text-muted" id="paginationInfo">Affichage 1-25 de 0 résultats</span>
+                    </div>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0" id="pagination">
+                            <!-- Pagination sera générée dynamiquement -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour les détails d'une gare -->
+<div class="modal fade" id="gareDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-building me-2"></i>
+                    Détails de la Gare
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="gareModalContent">
+                <!-- Contenu dynamique -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" onclick="editGare()">
+                    <i class="fas fa-edit me-2"></i>Modifier
+                </button>
+                <button type="button" class="btn btn-success" onclick="showOnMap()">
+                    <i class="fas fa-map-marker-alt me-2"></i>Voir sur la carte
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour ajouter/modifier une gare -->
+<div class="modal fade" id="gareFormModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="gareFormTitle">
+                    <i class="fas fa-plus me-2"></i>
+                    Nouvelle Gare
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="gareForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="gareNom" class="form-label">Nom de la Gare *</label>
+                            <input type="text" class="form-control" id="gareNom" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gareCode" class="form-label">Code *</label>
+                            <input type="text" class="form-control" id="gareCode" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="gareType" class="form-label">Type</label>
+                            <select class="form-select" id="gareType">
+                                <option value="">Sélectionner un type</option>
+                                <option value="PRINCIPALE">Principale</option>
+                                <option value="SECONDAIRE">Secondaire</option>
+                                <option value="TERMINUS">Terminus</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gareAxe" class="form-label">Axe</label>
+                            <select class="form-select" id="gareAxe">
+                                <option value="">Sélectionner un axe</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="gareVille" class="form-label">Ville</label>
+                            <input type="text" class="form-control" id="gareVille">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gareEtat" class="form-label">État</label>
+                            <select class="form-select" id="gareEtat">
+                                <option value="ACTIVE">Active</option>
+                                <option value="PASSIVE">Passive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="gareCodeOp" class="form-label">Code Opérationnel</label>
+                            <input type="text" class="form-control" id="gareCodeOp">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gareCodeReseau" class="form-label">Code Réseau</label>
+                            <input type="text" class="form-control" id="gareCodeReseau">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gareDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="gareDescription" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" onclick="saveGare()">
+                    <i class="fas fa-save me-2"></i>Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.table th {
+    cursor: pointer;
+    user-select: none;
+}
+
+.table th:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.table th i {
+    margin-left: 5px;
+    opacity: 0.5;
+}
+
+.table th:hover i {
+    opacity: 1;
+}
+
+.gare-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.gare-status.active {
+    background-color: #198754;
+}
+
+.gare-status.passive {
+    background-color: #6c757d;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.action-buttons .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.form-select-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+#paginationInfo {
+    font-size: 0.875rem;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/gares.js') }}"></script>
+{% endblock %} 

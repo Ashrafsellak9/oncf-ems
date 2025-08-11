@@ -1,0 +1,408 @@
+1,2020-02-20 00:00:00,t,1,2,Train contre obstacle,f
+2,2020-02-20 00:00:00,t,1,2,Train contre véhicule routier (PN),f
+3,2020-02-20 00:00:00,t,1,2,Train contre véhicule routier (Hors PN),f
+4,2020-02-20 00:00:00,t,1,2,Autres accidents,f
+5,2020-02-20 00:00:00,t,2,2,Blessure voyageur/collaborateur,f
+6,2020-02-20 00:00:00,t,2,2,Présence cadavre avec traces accident ferroviaire dans circonstances indéterminées,f
+7,2020-02-20 00:00:00,t,2,2,Suicide,f
+8,2020-02-20 00:00:00,t,2,2,Tamponnement avec décès,f
+9,2020-02-20 00:00:00,t,2,2,Tamponnement sans décès,f
+11,2020-02-20 00:00:00,t,2,2,Autres accidents de personnes,f
+12,2020-02-20 00:00:00,t,3,2,Aubinage signal,f
+13,2020-02-20 00:00:00,t,3,2,Déprédation caténaire,f
+14,2020-02-20 00:00:00,t,3,2,Déprédation matériel moteur/remorqué,f
+15,2020-02-20 00:00:00,t,3,2,Déprédation signalisation,f
+16,2020-02-20 00:00:00,t,3,2,Déprédation télécom,f
+17,2020-02-20 00:00:00,t,3,2,Déprédation voie,f
+18,2020-02-20 00:00:00,t,3,2,Dépression dans la conduite générale,f
+19,2020-02-20 00:00:00,t,3,2,Jet de pierre contre machines/voitures,f
+20,2020-02-20 00:00:00,t,3,2,Pose d'obstacle sur la voie,f
+21,2020-02-20 00:00:00,t,3,2,Vol caténaire,f
+22,2020-02-20 00:00:00,t,3,2,Vol d'organe wagons/voitures,f
+23,2020-02-20 00:00:00,t,3,2,Vol signalisation,f
+24,2020-02-20 00:00:00,t,3,2,Vol télécom,f
+25,2020-02-20 00:00:00,t,3,2,Vol voie,f
+26,2020-02-20 00:00:00,t,3,2,Vol/agression voyageurs,f
+27,2020-02-20 00:00:00,t,3,2,Autres actes de malveillances,f
+28,2020-02-20 00:00:00,t,4,2,Action signal d'alarme,f
+29,2020-02-20 00:00:00,t,4,2,Engagement PN,f
+30,2020-02-20 00:00:00,t,4,2,Evacuation marchand ambulant,f
+31,2020-02-20 00:00:00,t,4,2,Evacuation resquilleur,f
+32,2020-02-20 00:00:00,t,4,2,Evacuation subsahariens,f
+33,2020-02-20 00:00:00,t,4,2,Evitement de personnes,f
+34,2020-02-20 00:00:00,t,4,2,Tamponnement charrette,f
+35,2020-02-20 00:00:00,t,4,2,Tamponnement/évitement de bêtes,f
+36,2020-02-20 00:00:00,t,4,2,Autres arrêts accidentels,f
+37,2020-02-20 00:00:00,t,5,2,Brouillard,f
+38,2020-02-20 00:00:00,t,5,2,Eboulement/glissement,f
+39,2020-02-20 00:00:00,t,5,2,Ensablement,f
+40,2020-02-20 00:00:00,t,5,2,Forte chaleur,f
+41,2020-02-20 00:00:00,t,5,2,Foudre,f
+42,2020-02-20 00:00:00,t,5,2,Innondation,f
+43,2020-02-20 00:00:00,t,5,2,Pluies torrentielles,f
+44,2020-02-20 00:00:00,t,5,2,Vents violents (Bulletin),f
+45,2020-02-20 00:00:00,t,5,2,Vents violents (DVL/fonctionnement normal),f
+46,2020-02-20 00:00:00,t,5,2,Autres intempéries,f
+47,2020-02-20 00:00:00,t,6,2,Séisme (Bulletin),f
+48,2020-02-20 00:00:00,t,6,2,Séisme (DSI/fonctionnement normal),f
+50,2020-02-20 00:00:00,t,8,2,Agent de sécurité absent sans motif,f
+51,2020-02-20 00:00:00,t,8,2,Agent de sécurité endormi,f
+52,2020-02-20 00:00:00,t,8,2,Coupure courant non réglementaire,f
+53,2020-02-20 00:00:00,t,8,2,Expédition sur un mauvais itinéraire,f
+54,2020-02-20 00:00:00,t,8,2,Fermeture voie non assurée,f
+55,2020-02-20 00:00:00,t,8,2,Fermeture prématurée signaux,f
+56,2020-02-20 00:00:00,t,8,2,Incident circulation par draisinier,f
+57,2020-02-20 00:00:00,t,8,2,Omission/mise à VL tardive des signaux,f
+58,2020-02-20 00:00:00,t,8,2,Ordre de sécurité non délivré,f
+59,2020-02-20 00:00:00,t,8,2,Ouverture tardive gare,f
+60,2020-02-20 00:00:00,t,8,2,PN fermé tardivement,f
+61,2020-02-20 00:00:00,t,8,2,PN ouvert au passage d'un train,f
+62,2020-02-20 00:00:00,t,8,2,Réception ciruclation électrique sur voie non électrifiée,f
+63,2020-02-20 00:00:00,t,8,2,Réception sur mauvais itinéraire,f
+64,2020-02-20 00:00:00,t,8,2,Réception sur voie occupée sans signalisation appropriée,f
+65,2020-02-20 00:00:00,t,8,2,Visite de défilé non assurée,f
+66,2020-02-20 00:00:00,t,8,2,Autres incidents de circulation,f
+67,2020-02-20 00:00:00,t,9,2,Bi-voie,f
+68,2020-02-20 00:00:00,t,9,2,Déraillement sur voie de service,f
+69,2020-02-20 00:00:00,t,9,2,Dérive sur voie de service,f
+70,2020-02-20 00:00:00,t,9,2,Enfourchement,f
+71,2020-02-20 00:00:00,t,9,2,Prise en écharpe,f
+72,2020-02-20 00:00:00,t,9,2,Talonnage d'aiguille,f
+73,2020-02-20 00:00:00,t,9,2,Tamponnement véhicule en stationnement/cul de sac,f
+74,2020-02-20 00:00:00,t,9,2,Autres incidents manœuvre (circulation),f
+75,2020-02-20 00:00:00,t,10,2,Bi-voie,f
+76,2020-02-20 00:00:00,t,10,2,Déraillement sur voie de service,f
+77,2020-02-20 00:00:00,t,10,2,Dérive sur voie de service,f
+78,2020-02-20 00:00:00,t,10,2,Enfourchement,f
+79,2020-02-20 00:00:00,t,10,2,Talonnage d'aiguille,f
+80,2020-02-20 00:00:00,t,10,2,Tamponnement véhicule en stationnement/cul de sac,f
+81,2020-02-20 00:00:00,t,10,2,Autres incidents manœuvre (PFL),f
+90,2020-02-20 00:00:00,t,12,2,Acheminement véhicule ou machine en répartition,f
+91,2020-02-20 00:00:00,t,12,2,Altercation entre voyageurs et ACT,f
+92,2020-02-20 00:00:00,t,12,2,Alerte radio intempestive emise par le conducteur de ligne,f
+93,2020-02-20 00:00:00,t,12,2,Attente brigade,f
+94,2020-02-20 00:00:00,t,12,2,Attente échange GSM entre CTR et ACT,f
+95,2020-02-20 00:00:00,t,12,2,Attente libération de voie,f
+96,2020-02-20 00:00:00,t,12,2,Changement de type de machine,f
+97,2020-02-20 00:00:00,t,12,2,Changement de programme,f
+99,2020-02-20 00:00:00,t,12,2,Demande relève brigade,f
+100,2020-02-20 00:00:00,t,12,2,Défaut brigade,f
+101,2020-02-20 00:00:00,t,12,2,Défaut éléments,f
+102,2020-02-20 00:00:00,t,12,2,Dévoiement voyageurs,f
+103,2020-02-20 00:00:00,t,12,2,Echange machines et essais de frein,f
+104,2020-02-20 00:00:00,t,12,2,Encombrement des voies,f
+105,2020-02-20 00:00:00,t,12,2,Formation tardive,f
+106,2020-02-20 00:00:00,t,12,2,Mise à quai tardive,f
+107,2020-02-20 00:00:00,t,12,2,Omission étiquette de réforme,f
+108,2020-02-20 00:00:00,t,12,2,Retard chargement/déchargement,f
+109,2020-02-20 00:00:00,t,12,2,Réutilisation rame,f
+110,2020-02-20 00:00:00,t,12,2,Surcharge,f
+111,2020-02-20 00:00:00,t,12,2,Transport spécial,f
+112,2020-02-20 00:00:00,t,12,2,Autres incidents services de train,f
+113,2020-02-20 00:00:00,t,13,2,Eclairage PDV,f
+114,2020-02-20 00:00:00,t,13,2,Eclairage PIC,f
+115,2020-02-20 00:00:00,t,13,2,Anomalie GE,f
+116,2020-02-20 00:00:00,t,13,2,Autres incidents bâtiment,f
+117,2020-02-20 00:00:00,t,14,2,Avarie organe de commande,f
+118,2020-02-20 00:00:00,t,14,2,Détachement anti-balançant,f
+119,2020-02-20 00:00:00,t,14,2,Détachement bras de rappel,f
+120,2020-02-20 00:00:00,t,14,2,Manque tension ligne,f
+121,2020-02-20 00:00:00,t,14,2,Rupture mécanique,f
+122,2020-02-20 00:00:00,t,14,2,Rupture par fusion,f
+123,2020-02-20 00:00:00,t,14,2,Autres incidents caténaire,f
+124,2020-02-20 00:00:00,t,15,2,DBC-DFB,f
+125,2020-02-20 00:00:00,t,15,2,DCR (Détecteur Chute de Rochers),f
+126,2020-02-20 00:00:00,t,15,2,DCV (Détecteur Chute de Véhicules),f
+127,2020-02-20 00:00:00,t,15,2,DSI (Détecteur Sismique),f
+128,2020-02-20 00:00:00,t,15,2,DVL (Détecteur de Vents Latéraux),f
+129,2020-02-20 00:00:00,t,15,2,GOTCHA,f
+130,2020-02-20 00:00:00,t,16,2,"Alimentation (ASI, batterie, GE)",f
+131,2020-02-20 00:00:00,t,16,2,Avertisseurs PN,f
+132,2020-02-20 00:00:00,t,16,2,BAPR défaut compteur,f
+133,2020-02-20 00:00:00,t,16,2,BAPR défaut communication,f
+134,2020-02-20 00:00:00,t,16,2,BAPR erreur comptage,f
+135,2020-02-20 00:00:00,t,16,2,BAPR FELB,f
+136,2020-02-20 00:00:00,t,16,2,Autres dérangements BAPR,f
+137,2020-02-20 00:00:00,t,16,2,Autres Block (en dehors BAPR),f
+138,2020-02-20 00:00:00,t,16,2,Défaut commande de locale poste d'aiguillage,f
+139,2020-02-20 00:00:00,t,16,2,Défaut contrôle au poste,f
+140,2020-02-20 00:00:00,t,16,2,Défaut télécommade poste d'aiguillage,f
+142,2020-02-20 00:00:00,t,16,2,Extinction totale (PAI),f
+143,2020-02-20 00:00:00,t,16,2,Extinction partiel (PAI),f
+144,2020-02-20 00:00:00,t,16,2,Extinction totale (PCC),f
+145,2020-02-20 00:00:00,t,16,2,Extinction partielle (PCC),f
+146,2020-02-20 00:00:00,t,16,2,Extinction totale (PCD),f
+147,2020-02-20 00:00:00,t,16,2,Extinction partielle (PCD),f
+148,2020-02-20 00:00:00,t,16,2,Extinction totale (PCL),f
+149,2020-02-20 00:00:00,t,16,2,Extinction partielle (PCL),f
+150,2020-02-20 00:00:00,t,16,2,Installations TCT,f
+151,2020-02-20 00:00:00,t,16,2,"Organe de commande (levier, bouton, commutateur)",f
+152,2020-02-20 00:00:00,t,16,2,Pédales,f
+153,2020-02-20 00:00:00,t,16,2,Perte de dynamisation partielle (PAI),f
+154,2020-02-20 00:00:00,t,16,2,Perte de dynamisation totale (PAI),f
+155,2020-02-20 00:00:00,t,16,2,Perte de dynamisation partielle (PCC),f
+156,2020-02-20 00:00:00,t,16,2,Perte de dynamisation totale (PCC),f
+157,2020-02-20 00:00:00,t,16,2,Perte de dynamisation partielle (PCD),f
+158,2020-02-20 00:00:00,t,16,2,Perte de dynamisation totale (PCD),f
+159,2020-02-20 00:00:00,t,16,2,Perte de dynamisation partielle (PCL),f
+160,2020-02-20 00:00:00,t,16,2,Perte de dynamisation totale (PCL),f
+161,2020-02-20 00:00:00,t,16,2,Signaux,f
+162,2020-02-20 00:00:00,t,16,2,Système PN SAFA,f
+163,2020-02-20 00:00:00,t,16,2,Système suivi des trains (PCC),f
+164,2020-02-20 00:00:00,t,16,2,Système suivi des trains (PCD),f
+165,2020-02-20 00:00:00,t,16,2,Système suivi des trains (PCL),f
+166,2020-02-20 00:00:00,t,16,2,Zones,f
+167,2020-02-20 00:00:00,t,16,2,RBC,f
+168,2020-02-20 00:00:00,t,16,2,Autres installations signalisation,f
+169,2020-02-20 00:00:00,t,17,2,Alerte radio intempestive,f
+170,2020-02-20 00:00:00,t,17,2,Dispatching,f
+171,2020-02-20 00:00:00,t,17,2,GSM-R,f
+172,2020-02-20 00:00:00,t,17,2,Omnibus,f
+173,2020-02-20 00:00:00,t,17,2,RST,f
+174,2020-02-20 00:00:00,t,17,2,Autres dérangements télécom,f
+175,2020-02-20 00:00:00,t,18,2,Arrêt total/partiel,f
+176,2020-02-20 00:00:00,t,18,2,déclenchement disjoncteur,f
+177,2020-02-20 00:00:00,t,18,2,Défaut télécommade,f
+178,2020-02-20 00:00:00,t,18,2,Autres incidents sous-station,f
+180,2020-02-20 00:00:00,t,19,2,Construction/réhabilitation bâtiment,f
+181,2020-02-20 00:00:00,t,19,2,Renouvellement caténaire (MOE),f
+182,2020-02-20 00:00:00,t,19,2,Renouvellement caténaire (maintenance),f
+183,2020-02-20 00:00:00,t,19,2,Renouvellement voie (MOE),f
+184,2020-02-20 00:00:00,t,19,2,Renouvellement voie (maintenance),f
+185,2020-02-20 00:00:00,t,19,2,Shuntage lame d'air (MOE),f
+186,2020-02-20 00:00:00,t,19,2,Shuntage lame d'air (maintenance),f
+188,2020-02-20 00:00:00,t,19,2,Signalisation (MOE),f
+189,2020-02-20 00:00:00,t,19,2,Signalisation (maintenance),f
+192,2020-02-20 00:00:00,t,19,2,Sous-station (MOE),f
+193,2020-02-20 00:00:00,t,19,2,Sous-station (maintenance),f
+194,2020-02-20 00:00:00,t,19,2,Sous-station (arrivées ONEE),f
+195,2020-02-20 00:00:00,t,19,2,Suppression PN,f
+196,2020-02-20 00:00:00,t,19,2,Traversées (ONEE),f
+197,2020-02-20 00:00:00,t,19,2,Télécom (MOE),f
+198,2020-02-20 00:00:00,t,19,2,Télécom (maintenance),f
+201,2020-02-20 00:00:00,t,19,2,Autres travaux sous-station,f
+202,2020-02-20 00:00:00,t,19,2,Autres travaux,f
+203,2020-02-20 00:00:00,t,20,2,Cisaillement câble/fibre optique (MOE),f
+204,2020-02-20 00:00:00,t,20,2,Cisaillement câble/fibre optique (maintenance),f
+206,2020-02-20 00:00:00,t,20,2,Engagement intempestif gabarit (MOE),f
+207,2020-02-20 00:00:00,t,20,2,Engagement intempestif gabarit (maintenance),f
+209,2020-02-20 00:00:00,t,20,2,Incident de manœuvre lors des travaux (MOE),f
+210,2020-02-20 00:00:00,t,20,2,Incident de manœuvre lors des travaux (maintenance),f
+212,2020-02-20 00:00:00,t,20,2,Incident sur voie non exploitée (MOE),f
+214,2020-02-20 00:00:00,t,20,2,Prise en écharpe,f
+215,2020-02-20 00:00:00,t,20,2,Reddition provisoire/avec restriction (MOE),f
+217,2020-02-20 00:00:00,t,20,2,Reddition provisoire/avec restriction (circulation),f
+218,2020-02-20 00:00:00,t,20,2,Reddition tardive (MOE),f
+219,2020-02-20 00:00:00,t,20,2,Reddition tardive (maintenance),f
+221,2020-02-20 00:00:00,t,20,2,Signalisation chantier non conforme/absent (maintenance),f
+222,2020-02-20 00:00:00,t,20,2,Signalisation chantier non conforme/absent (MOE),f
+224,2020-02-20 00:00:00,t,21,2,Balancement anormal,f
+225,2020-02-20 00:00:00,t,21,2,Choc anormal à la voie,f
+226,2020-02-20 00:00:00,t,21,2,Déformation voie,f
+227,2020-02-20 00:00:00,t,21,2,Désordre voie,f
+228,2020-02-20 00:00:00,t,21,2,Rail cassé,f
+229,2020-02-20 00:00:00,t,21,2,Soudure rompue,f
+230,2020-02-20 00:00:00,t,21,2,Autres incidents voie,f
+231,2020-02-20 00:00:00,t,22,2,ETCS sol,f
+232,2020-02-20 00:00:00,t,22,2,Autres incidents ERTMS (Sol),f
+233,2020-02-20 00:00:00,t,23,2,Anomalie portes intercirculation,f
+234,2020-02-20 00:00:00,t,23,2,Attente nettoyage voiture,f
+235,2020-02-20 00:00:00,t,23,2,Avarie coupleur 380 volts (voiture),f
+236,2020-02-20 00:00:00,t,23,2,Avarie essuie-glaces,f
+237,2020-02-20 00:00:00,t,23,2,Avarie organe,f
+238,2020-02-20 00:00:00,t,23,2,Avarie fourgon générateur,f
+239,2020-02-20 00:00:00,t,23,2,Siège brigade détérioré,f
+240,2020-02-20 00:00:00,t,23,2,Avarie/inefficacité frein continu,f
+241,2020-02-20 00:00:00,t,23,2,Avarie/inefficacité frein-à-vis,f
+242,2020-02-20 00:00:00,t,23,2,Balancement/vibration/trépidation matériel remorqué,f
+243,2020-02-20 00:00:00,t,23,2,Blocage un/plusieurs véhicules,f
+244,2020-02-20 00:00:00,t,23,2,Boite chaude,f
+246,2020-02-20 00:00:00,t,23,2,Défaut climatisation,f
+247,2020-02-20 00:00:00,t,23,2,Défaut sonorisation,f
+248,2020-02-20 00:00:00,t,23,2,Défaut système de rétention toilettes,f
+249,2020-02-20 00:00:00,t,23,2,Défaut éclairage,f
+250,2020-02-20 00:00:00,t,23,2,Dégagement fumée du au matériel remorqué,f
+251,2020-02-20 00:00:00,t,23,2,Désaccouplement demi-accouplements,f
+252,2020-02-20 00:00:00,t,23,2,Détachement organe,f
+253,2020-02-20 00:00:00,t,23,2,Fermeture/ouverture portes,f
+254,2020-02-20 00:00:00,t,23,2,Fuite d'air CG/CP,f
+255,2020-02-20 00:00:00,t,23,2,Méplat,f
+256,2020-02-20 00:00:00,t,23,2,Perte d'organe,f
+257,2020-02-20 00:00:00,t,23,2,Rupture attelages/crochets de traction,f
+258,2020-02-20 00:00:00,t,23,2,Autres incidents matériel,f
+260,2020-02-20 00:00:00,t,24,2,Déficit machine,f
+261,2020-02-20 00:00:00,t,24,2,Immobilisation machine,f
+262,2020-02-20 00:00:00,t,24,2,Nettoyage cabine de conduite,f
+263,2020-02-20 00:00:00,t,24,2,Sortie tardive machine,f
+264,2020-02-20 00:00:00,t,24,2,Autres services machines,f
+265,2020-02-20 00:00:00,t,25,2,Anomalie frein de parking,f
+266,2020-02-20 00:00:00,t,25,2,Anomalie VA,f
+267,2020-02-20 00:00:00,t,25,2,Arrêt MDZ,f
+268,2020-02-20 00:00:00,t,25,2,Avarie CVS,f
+269,2020-02-20 00:00:00,t,25,2,Avarie compresseur,f
+270,2020-02-20 00:00:00,t,25,2,Avarie coupleur 380 volts (machine),f
+271,2020-02-20 00:00:00,t,25,2,Avarie machine,f
+272,2020-02-20 00:00:00,t,25,2,Avarie sifflet,f
+273,2020-02-20 00:00:00,t,25,2,Avarie fanaux,f
+274,2020-02-20 00:00:00,t,25,2,Avarie manipulateur frein,f
+275,2020-02-20 00:00:00,t,25,2,Avarie téloc,f
+276,2020-02-20 00:00:00,t,25,2,Blocage machine,f
+277,2020-02-20 00:00:00,t,25,2,Boite chaude,f
+278,2020-02-20 00:00:00,t,25,2,Disjonction machine,f
+279,2020-02-20 00:00:00,t,25,2,Dégagement de fumée,f
+280,2020-02-20 00:00:00,t,25,2,Impuissance machine,f
+281,2020-02-20 00:00:00,t,25,2,Incident pantographe,f
+282,2020-02-20 00:00:00,t,25,2,Inefficacité/avarie frein,f
+283,2020-02-20 00:00:00,t,25,2,Patinage suite à non fonctionnement sablières,f
+284,2020-02-20 00:00:00,t,25,2,Perte d'organe,f
+285,2020-02-20 00:00:00,t,25,2,Autres incidents de traction,f
+286,2020-02-20 00:00:00,t,26,2,Erreur lors d'un autotest,f
+287,2020-02-20 00:00:00,t,26,2,ETCS Bord,f
+288,2020-02-20 00:00:00,t,26,2,Panne DMI,f
+289,2020-02-20 00:00:00,t,26,2,Défaut EVC,f
+290,2020-02-20 00:00:00,t,26,2,Perte de communication GSMR (en marche),f
+291,2020-02-20 00:00:00,t,26,2,Erreur lecture balises ETCS,f
+292,2020-02-20 00:00:00,t,26,2,Panne BTM (balise transmission module),f
+293,2020-02-20 00:00:00,t,26,2,Clé de cryptage,f
+294,2020-02-20 00:00:00,t,26,2,Autres incidents ERTMS (Bord),f
+300,2020-02-20 00:00:00,t,30,2,Alarme DBC/DFB sans anomalie détectée,f
+301,2020-02-20 00:00:00,t,30,2,Altercation entre voyageurs,f
+302,2020-02-20 00:00:00,t,30,2,Arrestation d'un voyageur en situation irrégulière,f
+303,2020-02-20 00:00:00,t,30,2,Bande d'usure arrachée sans constat à la caténaire,f
+304,2020-02-20 00:00:00,t,30,2,Bris de glace lors de croisement des trains,f
+305,2020-02-20 00:00:00,t,30,2,Circulation du cortège officiel,f
+306,2020-02-20 00:00:00,t,30,2,Coupure ONE non prévue,f
+308,2020-02-20 00:00:00,t,30,2,Endommagement installations par un tiers,f
+309,2020-02-20 00:00:00,t,30,2,Evénement particulier,f
+310,2020-02-20 00:00:00,t,30,2,Incendie/présence de feu,f
+311,2020-02-20 00:00:00,t,30,2,Manifestation/opposition,f
+313,2020-02-20 00:00:00,t,30,2,Présomption d’incident,f
+314,2020-02-20 00:00:00,t,30,2,Surcharge signalée par Gotcha,f
+315,2020-02-20 00:00:00,t,30,2,Transport supporters,f
+316,2020-02-20 00:00:00,t,30,2,Autres incidents divers,f
+317,2020-02-20 00:00:00,t,30,2,Balancement/vibration/trépidation Anomalie non détectée,f
+318,2025-04-04 15:11:09.651824,t,36,1,Bâtiments/locaux,f
+319,2021-05-21 00:00:00,t,35,1,Dégradation matériel,f
+320,2021-05-21 00:00:00,t,38,1,Pleine ligne,f
+321,2021-05-21 00:00:00,t,39,1,Dégradation matériel roulant,f
+322,2021-05-21 00:00:00,t,40,1,Installations fixes,f
+323,2021-05-21 00:00:00,t,34,1,Alerte attentat,f
+324,2021-05-21 00:00:00,t,37,1,Gravures et graffitis,f
+325,2021-05-21 00:00:00,t,42,1,Sans motif,f
+326,2021-05-21 00:00:00,t,41,1,Atteinte aux personnes,f
+327,2021-05-21 00:00:00,t,43,1,Outrage,f
+328,2021-05-21 00:00:00,t,44,1,Rebellions,f
+329,2021-05-21 00:00:00,t,49,1,Voyageurs,f
+330,2021-05-21 00:00:00,t,47,1,Voyageurs,f
+331,2021-05-21 00:00:00,t,48,1,Voyageurs,f
+333,2021-05-21 00:00:00,t,45,1,Tentative,f
+334,2021-05-21 00:00:00,t,32,1,Commises de façon collective,f
+335,2021-05-21 00:00:00,t,31,1,Mendicité,f
+336,2021-05-21 00:00:00,t,33,1,Resquille,f
+337,2021-05-21 00:00:00,t,36,1,Installations fixes,f
+338,2021-05-21 00:00:00,t,36,1,Matériel roulant,f
+339,2021-05-21 00:00:00,t,35,1,Déraillement,f
+340,2021-05-21 00:00:00,t,35,1,Déraillement possible,f
+341,2021-05-21 00:00:00,t,35,1,Matériel voie endommagé,f
+342,2021-05-21 00:00:00,t,38,1,Abords voie/emprises,f
+343,2021-05-21 00:00:00,t,38,1,Installations fixes,f
+344,2021-05-21 00:00:00,t,38,1,Matériel,f
+345,2021-05-21 00:00:00,t,38,1,Bâtiments/locaux,f
+346,2021-05-21 00:00:00,t,39,1,Dégradation installations fixes,f
+347,2021-05-21 00:00:00,t,40,1,Matériel roulant,f
+348,2021-05-21 00:00:00,t,34,1,Attentat,f
+349,2021-05-21 00:00:00,t,34,1,Prise d'otages,f
+350,2021-05-21 00:00:00,t,34,1,Menace attentat,f
+351,2021-05-21 00:00:00,t,42,1,Altercation,f
+352,2021-05-21 00:00:00,t,49,1,Personnel/sous-traitants,f
+353,2021-05-21 00:00:00,t,47,1,Personnel/sous-traitants,f
+354,2021-05-21 00:00:00,t,48,1,Personnel/sous-traitants,f
+357,2021-05-21 00:00:00,t,45,1,Falsification mode paiement,f
+358,2021-05-21 00:00:00,t,45,1,Voyageurs en situation irrégulière,f
+359,2021-05-21 00:00:00,t,32,1,Commises de façon individuelle,f
+360,2021-05-21 00:00:00,t,31,1,Vente à la sauvette,f
+361,2021-05-21 00:00:00,t,31,1,Trafic stupéfiants,f
+362,2021-05-21 00:00:00,t,31,1,Ivresse/détention alcool,f
+363,2021-05-21 00:00:00,t,31,1,Usage stupéfiants,f
+364,2021-05-21 00:00:00,t,31,1,Transport objets interdits,f
+365,2021-05-21 00:00:00,t,33,1,Intrusion de personnes,f
+366,2021-05-21 00:00:00,t,33,1,Entrave à la circulation (engagement de la voie),f
+367,2021-05-21 00:00:00,t,33,1,Squat locaux/bâtiments,f
+387,2021-05-21 00:00:00,t,31,1,Non spécifiée/Autre,f
+388,2021-05-21 00:00:00,t,32,1,Non spécifiée/Autre,f
+389,2021-05-21 00:00:00,t,33,1,Non spécifiée/Autre,f
+390,2021-05-21 00:00:00,t,34,1,Non spécifiée/Autre,f
+391,2021-05-21 00:00:00,t,35,1,Non spécifiée/Autre,f
+392,2021-05-21 00:00:00,t,36,1,Non spécifiée/Autre,f
+393,2021-05-21 00:00:00,t,37,1,Non spécifiée/Autre,f
+394,2021-05-21 00:00:00,t,38,1,Non spécifiée/Autre,f
+395,2021-05-21 00:00:00,t,39,1,Non spécifiée/Autre,f
+396,2021-05-21 00:00:00,t,40,1,Non spécifiée/Autre,f
+397,2021-05-21 00:00:00,t,41,1,Non spécifiée/Autre,f
+398,2021-05-21 00:00:00,t,42,1,Non spécifiée/Autre,f
+399,2021-05-21 00:00:00,t,43,1,Non spécifiée/Autre,f
+400,2021-05-21 00:00:00,t,44,1,Non spécifiée/Autre,f
+401,2021-05-21 00:00:00,t,45,1,Non spécifiée/Autre,f
+403,2021-05-21 00:00:00,t,47,1,Non spécifiée/Autre,f
+404,2021-05-21 00:00:00,t,48,1,Non spécifiée/Autre,f
+405,2021-05-21 00:00:00,t,49,1,Non spécifiée/Autre,f
+406,2021-10-15 00:00:00,t,50,1,Pleine ligne,f
+407,2021-10-15 00:00:00,t,50,1,Abords voie/emprises,f
+408,2021-10-15 00:00:00,t,50,1,Installations fixes,f
+409,2021-10-15 00:00:00,t,50,1,Matériel,f
+410,2021-10-15 00:00:00,t,50,1,Bâtiments/locaux,f
+411,2021-10-15 00:00:00,t,50,1,Non spécifiée/Autre,f
+412,2021-11-08 12:00:00,t,33,1,Tamponnement de personnes,f
+413,2021-11-08 12:00:00,t,33,1,Intrusion de bestiaux,f
+414,2021-11-08 12:00:00,t,33,1,Tamponnement de bestiaux,f
+415,2021-11-08 12:00:00,t,33,1,Tamponnement de chiens,f
+416,2021-11-08 12:00:00,t,51,1,Installations fixes,f
+417,2021-11-08 12:00:00,t,51,1,Gare,f
+418,2021-11-08 12:00:00,t,51,1,Matériel roulant,f
+419,2021-11-08 12:00:00,t,51,1,Non spécifiée/Autre,f
+420,2022-01-01 00:00:00,t,30,2,Défaut de réseau de communication,f
+421,2022-01-01 00:00:00,t,52,2,Anomalie site marchand/Institutionnel,f
+422,2022-01-01 00:00:00,t,52,2,Non-conformité CRC,f
+423,2022-01-01 00:00:00,t,52,2,Blocage de l'application de géolocalisation,f
+424,2022-01-01 00:00:00,t,52,2,Blocage/lenteur du SIV,f
+425,2022-01-01 00:00:00,t,52,2,Blocage du système DAVINCI,f
+426,2022-01-01 00:00:00,t,52,2,GPS,f
+427,2022-01-01 00:00:00,t,3,2,Déprédation Bâtiment,f
+428,2022-01-01 00:00:00,t,5,2,Alerte météo,f
+429,2022-01-01 00:00:00,t,5,2,Débordement oued,f
+430,2022-01-01 00:00:00,t,12,2,Réutilisation machine,f
+431,2022-01-01 00:00:00,t,12,2,Service voyageurs,f
+432,2022-01-01 00:00:00,t,12,2,Correspondance,f
+433,2022-01-01 00:00:00,t,53,2,Alerte radio intempestive émise par un collaborateur PM,f
+434,2022-01-01 00:00:00,t,13,2,Incident passage sous terrain,f
+435,2022-01-01 00:00:00,t,16,2,Aiguille (partie électrique),f
+436,2022-01-01 00:00:00,t,16,2,Verrou,f
+437,2022-01-01 00:00:00,t,17,2,RST,f
+438,2022-01-01 00:00:00,t,26,2,Non fonctionnement GSMR (Au Départ),f
+439,2022-01-01 00:00:00,t,26,2,Autres incidents ERTMS et équipements,f
+442,2022-01-01 00:00:00,t,23,2,Autres incident matériel remorqué,f
+443,2022-01-01 00:00:00,t,23,2,Balancement/vibration/trépidation (machine),f
+444,2022-01-01 00:00:00,t,25,2,Autre incident matériel moteur,f
+445,2022-01-01 00:00:00,t,54,2,Tamponnement d'oiseau,f
+446,2022-01-01 00:00:00,t,55,2,Autres,f
+447,2022-01-01 00:00:00,t,26,2,Echec de connexion,f
+448,2022-01-01 00:00:00,t,24,2,Immobilisation rame,f
+449,2022-01-01 00:00:00,t,25,2,Desserrage lent de la rame,f
+450,2022-01-01 00:00:00,t,25,2,Disjonction rames,f
+451,2022-01-01 00:00:00,t,25,2,Initialisation rame,f
+452,2022-01-01 00:00:00,t,25,2,Fuite d'air dans la CP de la machine,f
+453,2022-01-01 00:00:00,t,25,2,Alarme DBC/DFB,f
+454,2022-01-01 00:00:00,t,16,2,Extinction de la bande verticale d'un TIV,f
+455,2022-01-01 00:00:00,t,54,2,Autres,f
+456,2023-03-17 00:00:00,t,56,1,Harcèlement,f
+457,2024-09-23 00:00:00,t,57,1,Dégradation,f
+458,2024-09-23 00:00:00,t,57,1,Vol,f
+459,2025-01-23 10:54:00,t,59,1,Autres,f
+460,2025-01-23 10:54:00,t,60,1,Dégradation matérielle roulant,f
+461,2025-01-23 10:54:00,t,61,1,Intempérie,f
+462,2025-01-23 10:54:00,t,61,1,Autres,f
+463,2025-01-23 11:08:00,t,62,1,Installations fixes,f
+464,2025-04-04 14:36:15.291186,t,62,1,Matériel roulant,f
+465,2025-01-23 11:08:00,t,63,1,Commises de façon collective,f
+466,2025-04-04 12:23:12.551056,t,63,1,Commises de façon individuelle,f
+467,2025-04-10 12:10:26.754607,t,75,1,soutype,f

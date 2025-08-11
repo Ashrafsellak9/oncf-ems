@@ -1,0 +1,368 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion des Incidents - ONCF GIS{% endblock %}
+
+{% block extra_css %}
+<style>
+.incident-card {
+    border-left: 4px solid #dc3545;
+    transition: all 0.3s ease;
+}
+
+.incident-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.incident-card.resolved {
+    border-left-color: #28a745;
+}
+
+.incident-card.in-progress {
+    border-left-color: #ffc107;
+}
+
+.incident-card.open {
+    border-left-color: #dc3545;
+}
+
+.status-badge {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.incident-description {
+    max-height: 100px;
+    overflow: hidden;
+    position: relative;
+}
+
+.incident-description.expanded {
+    max-height: none;
+}
+
+.expand-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(to right, transparent, white 50%);
+    padding-left: 20px;
+}
+
+.filter-section {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    text-align: center;
+    border-top: 4px solid var(--primary-color);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.timeline-item {
+    border-left: 2px solid #e9ecef;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    position: absolute;
+    left: -6px;
+    top: 0.5rem;
+}
+
+.incident-details-modal .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.type-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.type-chip {
+    background: #e9ecef;
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.type-chip.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- En-tête -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">🚨 Gestion des Incidents</h1>
+            <p class="text-muted mb-0">Suivi et analyse des événements du réseau ferroviaire</p>
+        </div>
+        <div>
+            <button class="btn btn-primary" onclick="refreshIncidents()">
+                <i class="fas fa-sync-alt"></i> Actualiser
+            </button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newIncidentModal">
+                <i class="fas fa-plus"></i> Nouvel Incident
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" id="totalIncidents">-</div>
+            <div class="stat-label">Total Incidents</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="openIncidents">-</div>
+            <div class="stat-label">Incidents Ouverts</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="resolvedIncidents">-</div>
+            <div class="stat-label">Incidents Résolus</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="avgResolutionTime">-</div>
+            <div class="stat-label">Temps Moyen Résolution</div>
+        </div>
+    </div>
+
+    <!-- Filtres -->
+    <div class="filter-section">
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label">Statut</label>
+                <select class="form-select" id="statusFilter">
+                    <option value="">Tous les statuts</option>
+                    <option value="Ouvert">Ouvert</option>
+                    <option value="En cours">En cours</option>
+                    <option value="Résolu">Résolu</option>
+                    <option value="Fermé">Fermé</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Période</label>
+                <select class="form-select" id="periodFilter">
+                    <option value="">Toutes les périodes</option>
+                    <option value="today">Aujourd'hui</option>
+                    <option value="week">Cette semaine</option>
+                    <option value="month">Ce mois</option>
+                    <option value="year">Cette année</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Recherche</label>
+                <input type="text" class="form-control" id="searchFilter" placeholder="Rechercher dans les descriptions...">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Par page</label>
+                <select class="form-select" id="itemsPerPageSelect" onchange="changeItemsPerPage()">
+                    <option value="25">25</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">&nbsp;</label>
+                <div>
+                    <button class="btn btn-outline-primary w-100" onclick="applyFilters()">
+                        <i class="fas fa-filter"></i> Filtrer
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filtres par type d'incident -->
+        <div class="type-filter" id="typeFilters">
+            <!-- Types chargés dynamiquement -->
+        </div>
+    </div>
+
+    <!-- Informations de pagination -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="pagination-info">
+                    <span id="paginationInfo" class="text-muted">
+                        Chargement des incidents...
+                    </span>
+                </div>
+                <div class="pagination-stats">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        <span id="paginationStats">-</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liste des incidents -->
+    <div class="row" id="incidentsList">
+        <!-- Incidents chargés dynamiquement -->
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Pagination des incidents" class="mt-4">
+        <ul class="pagination justify-content-center" id="paginationControls">
+            <!-- Pagination chargée dynamiquement -->
+        </ul>
+    </nav>
+</div>
+
+<!-- Modal Détails Incident -->
+<div class="modal fade" id="incidentDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Détails de l'Incident</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="incidentDetailsContent">
+                <!-- Contenu chargé dynamiquement -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" onclick="editIncident()">Modifier</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Nouvel Incident -->
+<div class="modal fade" id="newIncidentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nouveau Incident</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newIncidentForm">
+                    <div class="mb-3">
+                        <label class="form-label">Type d'incident *</label>
+                        <select class="form-select" id="incidentType" required>
+                            <option value="">Sélectionner un type</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Localisation *</label>
+                        <select class="form-select" id="incidentLocation" required>
+                            <option value="">Sélectionner une localisation</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">Date début *</label>
+                            <input type="datetime-local" class="form-control" id="incidentDateDebut" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Date fin</label>
+                            <input type="datetime-local" class="form-control" id="incidentDateFin">
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Description *</label>
+                        <textarea class="form-control" id="incidentDescription" rows="4" required 
+                                  placeholder="Décrivez l'incident en détail..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Statut</label>
+                        <select class="form-select" id="incidentStatut">
+                            <option value="Ouvert">Ouvert</option>
+                            <option value="En cours">En cours</option>
+                            <option value="Résolu">Résolu</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" onclick="saveNewIncident()">
+                    <i class="fas fa-save"></i> Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay de chargement -->
+<div class="loading-overlay d-none" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/incidents.js') }}"></script>
+{% endblock %}
